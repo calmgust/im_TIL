@@ -167,11 +167,11 @@ console.log(age); // 90
 
 ##### let, const, var
 
-* let / const: block scope를 따르는 변수 선언
+* let / const: **block scope**를 따르는 변수 선언
 
 * var: function scope를 따르는 변수 선언
 
-* let, const는 var처럼 hoist되지 않음
+* **let, const는** var처럼 **hoist되지 않음**
 
   ```javascript
   console.log(a); // undefined
@@ -201,11 +201,16 @@ console.log(age); // 90
       console.log(a);
   })();
   
+//-----
+// let을 이용하여 IIFE를 대신할 수 있다
+
   {
       let a = 'immediately invoked';
       console.log(a);
   }
   ```
+
+
 
 
 
