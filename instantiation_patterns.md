@@ -73,6 +73,9 @@ var Car = function(position){ // 이렇게 초기 위치를 지정해 줄 수도
     
     return someInstance;
 }
+
+var car1 = Car(1); // 인자 값을 1로 지정
+var car2 = Car(5); // 인자 값을 5로 지정
 ```
 
 
