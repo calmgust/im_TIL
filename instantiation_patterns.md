@@ -103,7 +103,7 @@ var Car = function(position){ // 1. 먼저 Car 함수를 선언해 줍니다. �
     var someInstance = {
         position: position
     };
-    
+    extend(someInstance, someMethods);
     return someInstance;
 };
 
@@ -193,4 +193,87 @@ var car2 = new Car(10); // 3. 하지만 이렇게 찍어낼 때에 new operator�
 
 
 **`new`operator를 붙여줘야한다**
+
+
+
+
+
+---
+
+
+
+#### slack study
+
+```javascript
+// Five Patterns of Instance Creation
+
+// 1. Functional pattern
+function Person(name) {
+	this.name = name;
+	this.getName = function() {
+		return this.name;
+	}
+	return instanceOfPerson;
+}
+var p = Person.call(Object.create({}), "anonymous");
+
+
+// 2. Functional-shared pattern
+var extend = function(obj) {
+	for(var i=1; i<arguments.length; i++) {
+		for(var key in arguments[i]) {
+			obj[key] = arguments[i][key];
+		}
+	}
+}
+function Person(name) {
+	this.name = name;
+	extend(this, instanceMethodsOfPerson);
+}
+var instanceMethodsOfPerson = {};
+instanceMethodsOfPerson.getName = function() {
+	return this.name;
+}
+var p = Person.call(Object.create(instanceMethodsOfPerson), "anonymous")
+
+
+// 3. prototypel pattern
+function Person(name) {
+	this.name = name;
+	
+	return this;
+}
+Person.prototype.getName = function() {
+	return this.name;
+}
+
+var p = Person.call(Object.create(Person.prototype), "anonymous");
+
+
+// 4. pseudoclassical pattern
+function Person(name) {
+	this.name = name;
+}
+Person.prototype.getName = function() {
+	return this.name;
+}
+
+var p = new Person("anonymous");
+
+
+// 5. class pattern [ ECMAScript6 ]
+class Person {
+	constructor(name) {
+		this.name = name;
+	}
+
+	getName() {
+		return this.name;
+	}
+}
+
+const p = new Person("anonymous");
+```
+
+
 
