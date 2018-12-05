@@ -535,6 +535,75 @@ class App extends React.Component {
 
 ### 23. props
 
+```js
+// video_list.js
+
+
+import React from 'react';
+
+// 두 개(index.js / search_bar.js?)의 상위 비디오 리스트 컴포넌트를 가지고 시작
+// 이들은 스테이트가 필요하지 않습니다.
+// 유저 인터렉션을 감지하지 않아도 되고, 어떤 형태로 리렌더링 되지 않아도 된다.
+// 그래서 단순한 함수형 컴포넌트를 만들 것
+
+const VideoList = () => {
+  return (
+    <ul className="col-md-4 list-group"> {/* 부트스트랩 컬럼 설정 */}
+		{props.videos.length}
+    </ul>
+  );
+};
+
+export default VideoList;
+```
+
+
+
+```js
+// index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import YTSearch from 'youtube-api-search';
+
+import SearchBar from './components/search_bar';
+// video-list를 export했으니 import해와야
+import VideoList from "./components/video_list";
+
+const API_KEY = 'asdf';
+
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { videos: [] };
+
+    YTSearch({key: API_KEY, term: 'surfboards'}, videos => {
+      this.setState({ videos });
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <SearchBar />
+        <VideoList videos={this.state.videos}/> // div에 넣어준다!!
+      </div>
+    );
+  }
+}
+
+
+ReactDOM.render(<App />, document.querySelector('.container'));
+```
+
+***부모 컴포넌트 `<App / >`에서 자식 컴포넌트 `<VideoList />` 로 데이터를 전달해야 한다.***
+
+#### 함수형(functional) 기반 컴포넌트를 클래스(class) 기반 컴포넌트로 리펙토링할 때 알아야할 중요한 것은 <u>*props를 this.props로 바꿔야*</u> 한다는 점
+
+localhost:8080
+
 
 
 
