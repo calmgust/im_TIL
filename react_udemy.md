@@ -162,7 +162,7 @@ ReactDOM.render(<App />);
 
 
 
-### 11. 타겟 렌더링
+### 11. 타겟 렌더링(target rendering)
 
 ```js
 ReactDOM.render(<App />, document.querySelector('.container'));
@@ -251,7 +251,7 @@ class SearchBar extends React.Component {
 
 
 
-### 16. 유저 이벤트 핸들링
+### 16. 유저 이벤트 핸들링(user event handling)
 
 리액트에서 이벤트를 핸들링할 때는 두 가지 과정 필요
 
@@ -264,7 +264,7 @@ class SearchBar extends React.Component {
    이 경우에 검색바 안의 인풋 요소의 텍스트가 바뀌는 것을 알려고 하는 것
 
 ```js
-// class 밖에 함수를 설정해주는 경우
+// class 밖에 함수를 설정해주는 경우 (속도가 더 빠르다!)
 
 class SearchBar extends React.Component {
     render() {
@@ -278,7 +278,7 @@ onInputChange(event) {
 
 //-----
 
-// input 태그 안에 함수를 설정해주는 경우
+// input 태그 안에 함수를 설정해주는 경우 (보기에는 편하지만 속도가 느리다!)
 
 class SearchBar extends React.Component {
     render() {
@@ -414,7 +414,7 @@ class SearchBar extends React.Component {
       <div>
         <input 
           value = {this.state.term} // 값이 입력되지 않는다!!
-          // onChange={event => this.setState({ term: event.target.value })}
+    	  onChange={event => this.setState({ term: event.target.value })}
         />
       </div>
     );
@@ -476,7 +476,7 @@ ReactDOM.render(<App />, document.querySelector('.constainer'));
 
 
 
-### 22. 함수형 컴포넌트를 클래스 컴포넌트로 리펙토링하기
+### 22. 함수형 컴포넌트를 클래스 컴포넌트로 리펙토링하기(refactoring)
 
 ```js
 const App () => {
@@ -602,25 +602,152 @@ ReactDOM.render(<App />, document.querySelector('.container'));
 
 #### 함수형(functional) 기반 컴포넌트를 클래스(class) 기반 컴포넌트로 리펙토링할 때 알아야할 중요한 것은 <u>*props를 this.props로 바꿔야*</u> 한다는 점
 
-localhost:8080
-
 
 
 
 
 ### 24. Map으로 리스트 만들기
 
+```js
+var arr = [1,2,3];
+
+arr.map(function(num) {return num*2});
+arr.map((num) => { return num * 2});
+arr.map(map => num * 2);
+// [2,4,6]
+
+arr.map(function(num) {return `<div>${num}</div>`})
+// ["<div>1</div>", "<div>2</div>", "<div>3</div>"]
+```
+
+
+
+```js
+// video_list.js
+
+import React from 'react';
+import VideoListItem from './video_list_item';
+
+const VideoList = (props) => {
+    const videoItems = props.videos.map(video => {
+        return <VideoListItem video={video} />
+    });
+    
+    return (
+    	<ul className="col-md-4 list-group"> {/*부트스트랩 컬럼 설정*/}		{videoItems}
+        </ul>
+    );
+}
+
+export default VideoList;
+```
+
+
+
+```js
+// video_list_item.js
+
+import React from 'react';
+
+const VideoListItem = (props) => {
+    return <li>Video</li>
+};
+
+export default VideoListItem;
+```
 
 
 
 
-### 25. 리스트 아이템 키
+
+### 25. <u>리스트 아이템 키</u>(list item key)*
+
+#### (추가 학습 필요 => 이해 부족)
+
+```js
+// video_list.js
+
+import React from 'react';
+import VideoListItem from './video_list_item';
+
+const VideoList = (props) => {
+    const videoItems = props.videos.map(video => {
+        return <VideoListItem key={video.etag} video={video} 				/>
+        // 배열의 각 자식은 특별한 key prop를 가져야 한다.
+    	// 각 리스트 아이템에 키를 넣어서 리액트가 빠른 방법으로 적절한 레코드를 업데이트할 수 있다는 것을 확인
+    	// 언제나 키를 추가하는 것을 확인하는 것은 좋은 자세
+    });
+    
+    return (
+    	<ul className="col-md-4 list-group"> {/*부트스트랩 컬럼 설정*/}		{videoItems}
+        </ul>
+    );
+}
+
+export default VideoList;
+```
+
+Warning: Each child in an array or iterator should have a unique "key" prop.
+
+Check the render method of 'VideoList'.
+
+***=> 이 배열의 각 자식은 특별한 key prop을 가져야 한다***
+
+배열 아이템들을 렌더링할 때마다, 리액트는 리스트를 만드는 것이라 가정
+
+***각 리스트 아이템에 키를 넣어서 리액트가 빠른 방법으로 적절한 레코드를 업데이트할 수 있다는 것을 확인***
+
+성능이 증가?
+
+**언제나 키를 추가하는 것을 확인하는 것은 좋은 자세**
 
 
 
 
 
-### 26. 비디오 리스트 아이템
+### 26. <u>비디오 리스트 아이템</u>(video list item)*
+
+***비디오 리스트를 현재 보다 보기 좋게 만드는 것에 초점***
+
+```js
+// video_list_item.js
+
+
+import React from 'react';
+
+// const VideoListItem = (props) => {
+//   const video = props.video;
+
+//   return <li>Video</li>
+// };
+
+const VideoListItem = ({ video }) => {
+  // const video = props.video; 위에 { video }는 같은 것
+  // console.log(video); 각 비디오 아이템에 대한 콘솔 로그를 얻게됨
+  // 주의를 기울여야할 유일한 프로퍼티는 snippet object
+  const imageUrl = video.snippet.thumbnails.default.url;
+
+  // list태그 안에 div태그로 정리
+  return (
+    <li className="list-group-item">
+
+      <div className="video-list media">
+        <div className="media-left">
+          <img className="media-object" src={imageUrl} />
+        </div>
+
+        <div className="media-body">
+          <div className="media-heading">{video.snippet.title}</div>
+        </div>
+      </div>
+
+    </li>
+  );
+};
+
+
+export default VideoListItem;
+```
 
 
 
@@ -628,45 +755,539 @@ localhost:8080
 
 ### 27. 디테일 컴포넌트와 템플릿 문자열
 
+***`video_detail.js` 에 컴포넌트는 유저가 실제로 선택한 비디오를 볼 수 있고 플레이 하도록*** 
+
+**새로운 컴포넌트를 작성하기 전에 자신에게 물어봐야할 질문**
+
+**=> 컴포넌트가 어떤 스테이트든 유지할 필요가 있느냐?**
+
+비디오 플레이 할 때 여기서는 유튜브 임베드를 사용할 것
+
+실제로 비디오 디테일은 비디오 타이틀과 내용과 url을 신경 쓸 필요가 있음
+
+여기에는 app 컴포넌트로부터 내려오고 props를 통해 이용가능한 모든 프로퍼티들이 있음
+
+*<u>이 비디오 디테일에는 어떤 스테이트도 필요하지 않음</u>*
+
+**=> 단순한 함수형(functional) 컴포넌트만 필요**
+
+```js
+// video_detail.js
+
+
+import React from 'react';
+
+const VideoDetail = ({video}) => {
+  // const video = props.video; 위에 {video}와 같다.
+  const videoId = video.id.videoId;
+  const url = `https://youtube.com/embed/${videoId}`; // 템플릿 문자열
+
+  return (
+    <div className="video-detail col-md-8">
+
+      <div className="embed-responsive embed-responsive-16by9">
+        <iframe className="embed-responsive-item" src={url}></iframe>
+      </div>
+
+      <div className="details">
+        <div>{video.snippet.title}</div>
+        <div>{video.snippet.description}</div>
+      </div>
+
+    </div>
+  );
+};
+
+export default VideoDetail;
+```
+
 
 
 
 
 ### 28. 널(null) props 핸들링하기
 
+```js
+// index.js
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import VideoDetail from './components/video_detail';
+
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            videos: []
+        }
+        
+        YTSearch(...);
+    }
+    
+    render() {
+        return(
+        	<div>
+            	...
+            	<VideoDetail video={this.state.videos[0]} />
+				{/* Cannot read property 'id' of undefined */}
+				...
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<App />, document.querySelector('.container'));
+```
+
+
+
+```js
+// video_detail.js
+
+
+import React from 'react';
+
+const VideoDetail = ({video}) => {
+  // const video = props.video; 위에 {video}와 같다.
+
+    
+  // video를 호출하려고 하면, undefined의 프로퍼티 아이디를 읽을 수 없다는 에러
+  // video.id를 읽으려고 해도 video가 undefined 이기에 아무것도 없는 것
+
+  // 리액트는 즉시 렌더링하길 원하고 기다리지 않음
+  // 어떤 부모 객체는 자식 객체의 필요를 만족시키도록 빠르게 정보를 가져올 수 없음
+  // 이 경우에는 비디오 디테일 컴포넌트 안에 체크 사항을 추가
+  // 렌더링을 시도하기 전에 비디오가 props에 주어졌는지 확인하는 과정
+  if (!video) {
+    return <div>Loading...</div>
+    // 비디오 디테일을 렌더링할 때 비디오가 제공되지 않으면, 이 떄 loading이 반환되는데
+    // 이 때 다른 나머지 프로세스는 위에서 return을 해주기 때문에 실행되지 않는다.
+  }
+
+  const videoId = video.id.videoId;
+  const url = `https://youtube.com/embed/${videoId}`; // 템플릿 문자열
+
+  return (
+    <div className="video-detail col-md-8">
+
+      <div className="embed-responsive embed-responsive-16by9">
+        <iframe className="embed-responsive-item" src={url}></iframe>
+      </div>
+
+      <div className="details">
+        <div>{video.snippet.title}</div>
+        <div>{video.snippet.description}</div>
+      </div>
+
+    </div>
+  );
+};
+
+export default VideoDetail;
+```
+
+리액트는 즉시 렌더링하길 원하고 기다리지 않는다. 그렇기 때문에 어떤 부모 객체는 자식 객체의 필요를 만족시키도록 빠르게 정보를 가져올 수 없다.
+
+이 경우에는 자식 컴포넌트 안에 체크 사항을 추가하여야 한다.( if 문 / 렌더링을 시도하기 전에 props가 주어졌는지 확인하는 과정 )
+
+렌더링할 때 비디오가 제공되지 않으면, 이 때 loading이 return되는데, 이 때 다른 나머지 프로세스는 위에서 return을 해주었기 때문에 실행되지 않는다.
 
 
 
 
-### 29. 비디오 선택
+
+### 29. <u>비디오 선택</u>(video select)*
+
+#### (난이도)
+
+```js
+// index.js
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import YTSearch from 'youtube-api-search';
+
+import SearchBar from './components/search_bar';
+import VideoList from "./components/video_list";
+import VideoDetail from "./components/video_detail";
+
+const API_KEY = 'AIzaSyAuuKBZkuvRGEpLvQOQqu8Cr9sJwdDASoU';
+
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { 
+      videos: [],
+      selectedVideo: null // 비디오를 선택하기 위함
+    };
+
+    YTSearch({key: API_KEY, term: 'BTS'}, videos => {
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0] // 초기값 설정
+      });
+    });
+      
+  }
+
+  render() {
+    return (
+      <div>
+        
+		<SearchBar />
+        <VideoDetail video={this.state.selectedVideo} />
+
+        <VideoList 
+			onVideoSelect={selectedVideo => this.setState({selectedVideo}) {/* callback 함수를 만들어 준다 */}
+			videos={this.state.videos} />
+                
+      </div>
+    );
+  }
+}
+
+
+ReactDOM.render(<App />, document.querySelector('.container'));
+```
+
+
+
+```js
+// video_list.js
+
+
+const VideoList = (props) => {
+  // const videos = props.videos;
+
+  const videoItems = props.videos.map(video => {
+    return (
+      <VideoListItem
+        onVideoSelect={props.onVideoSelect} {/* index.js에서의 callback funtion을 받아옴 */}
+        key={video.etag} 
+        video={video} />
+    );
+
+  });
+```
+
+
+
+```js
+// video_list_item.js
+
+
+const VideoListItem = ({ video, onVideoSelect }) => {
+  // const video = props.video;
+  // const onVideoSelect = props.onVideoSelect; 위에 { video, onVideoSelect }와  같은 것
+  // onVideoSelect => callback function
+
+    
+  const imageUrl = video.snippet.thumbnails.default.url;
+
+  return (
+    <li onClick={() => onVideoSelect(video)} className="list-group-item">
+	{/* onClick event안에서 callback function을 실행 */}
+      
+      
+      <div className="video-list media">
+        <div className="media-left">
+          <img className="media-object" src={imageUrl} />
+        </div>
+
+        <div className="media-body">
+          <div className="media-heading">{video.snippet.title}</div>
+        </div>
+      </div>
+
+    </li>
+  );
+};
+```
+
+위의 callback은 **부모 컴포넌트로부터 자식 컴포넌트로 전달**
+
+이렇게 두 레벨(두 단계) 이상으로 넘어가는 것은 약간 드문 경우
+
+***(=> 두 개의 컴포넌트를 거치는 경우)***
+
+<u>callback을 전달하는 것은 부모 컴포넌트와 자식 컴포넌트가 소통하기 위한 훌륭한 방법</u>
 
 
 
 
 
-### 30. CSS로 스타일링
+### 30. CSS로 스타일링(styling)
+
+#### CSS tip.
+
+***각 컴포넌트에서 상위 태그에 className을 컴포넌트 이름과 맞추어 주는 것***
+
+***=> 클래스 이름을 컴포넌트 이름과 일치시키기***
+
+<u>각 컴포넌트마다 연결된 CSS파일 하나를 찾을 수 있다.</u>
+
+```js
+// search-bar.js
+
+
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            term: ''
+        };
+    }
+    
+    render() {
+        return(
+        	<div className="search-bar"> 
+            {/* 상위 태그에 className을 컴포넌트 이름과 맞추어 주는 것 */}
+            	<input 
+            		value = {this.state.term}
+    				onChange={event => this.setState({term: event.target.value})} />
+            </div>
+        );
+    }
+}
+```
+
+
+
+```css
+.search-bar {
+  margin: 20px;
+  text-align: center;
+}
+
+/* search-bar와 그 자식인 input */
+.search-bar input {
+  width: 75%;
+}
+
+/* video-item과 img셀렉터(썸네일) */
+.video-item img {
+  max-width: 64px;
+}
+
+.video-detail .details {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* 유저가 해당 것에 마우스 오버 했을 경우 
+클릭 할 수 있다고 느낄 수 있다. */
+.list-group-item {
+  cursor: pointer;
+}
+
+/* 마우스 오버 시에 
+pseudo 셀렉터인 hover를 사용하여 
+배경색 변경(배경색 강조) */
+.list-group-item:hover {
+  background-color: #eee;
+}
+
+```
 
 
 
 
 
-### 31. 비디오 검색
+### 31. 비디오 검색(video searching) *
+
+***상단에 SearchBar를 연결***
+
+```js
+// index.js
+
+
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import YTSearch from 'youtube-api-search';
+
+import SearchBar from './components/search_bar';
+import VideoList from "./components/video_list";
+import VideoDetail from "./components/video_detail";
+
+const API_KEY = 'AIzaSyAuuKBZkuvRGEpLvQOQqu8Cr9sJwdDASoU';
+
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            videos: [],
+            selectedVideo: null // 비디오를 선택하기 위함
+        };
+        
+        this.videoSearch('BTS');
+        // 해당 term을 넘기는 형태로
+    }
+    
+    // 새로운 method를 만들어준다
+    videoSearch(term) {
+        // constructor 안에 있던 YTSearch() 함수를 새로 만든 videoSearch() 함수 안으로 이동
+        YTSearch({key: API_KEY, term: term}, videos => {
+            this.setState({
+                videos: videos,
+                searchedVideo: videos[0] // 초기값 설정
+            });
+        });
+    }
+    
+    render() {
+        return(
+        	<div>
+            	<SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
+            	<VideoDetail video={this.state.selectedVideo}/>
+            	<VideoList 
+					onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+                    videos={this.state.videos}/>
+            </div>
+        );
+    }
+}
+    
+ReactDOM.render(<App />, document.querySelector('.container'));
+```
+
+
+
+```js
+// search_bar.js
+
+
+import React from 'react';
+
+
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+          term: ''  
+        };
+    }
+    
+    render() {
+        return(
+        	<div className="search_bar">
+            	<input 
+            	value={this.state.term}
+    
+    			onChange={event => this.onInputChange(event.target.value)}
+                // 검색을 하기 위해서 onInputChange 함수 안에 event.target.value를 인자로 넣어준다.
+                />
+            </div>
+        );
+    }
+    
+    
+    // 위의 input 태그 안에 callback을 넣을 경우 복잡해질 수 있기 때문에
+    // 이벤트 핸들러를 분리하여 새로운 method를 만들어 준다.
+    onInputChange(term) {
+        // 두 가지 목적
+        this.setState({term});
+        // 1. setState를 하는 것
+        this.props.onSearchTermChange(term);
+        // 2. onSearchTermChange callback function invocation
+    }
+}
+
+export default SearchBar;
+```
 
 
 
 
 
-### 32. 인풋 검색어 조절
+### 32. 인풋(input) 검색어 조절 *
+
+**검색 주기를 조절 (유저가 타이핑을 시작할때 어느정도 시차를 두고 제시)**
+
+***=> 이 조절을 위해 lodash라 불리는 함수 라이브러리를 이용***
+
+이 라이브러리는 많은 유틸리티 메소드가 있는데, 그 중 하나가 **debounce**
+
+***=> debounce는 함수의 호출 시기를 조절 가능***
+
+**`npm install --save lodash`**
+
+```js
+// index.js
+
+
+import _ from 'lodash';
+
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import YTSearch from 'youtube-api-search';
+
+import SearchBar from './components/search_bar';
+import VideoList from "./components/video_list";
+import VideoDetail from "./components/video_detail";
+
+const API_KEY = 'AIzaSyAuuKBZkuvRGEpLvQOQqu8Cr9sJwdDASoU';
+
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            videos: [],
+            selectedVideos: null
+        };
+        
+        this.videoSearch('BTS');
+    }
+    
+    
+	videoSearch(term) {
+    	YTSearch({key: API_KEY, term: term}, videos => {
+            this.setState({
+                videos: videos,
+                selectedVideo: videos[0]
+      		});
+    	});
+  	}
+    
+    
+    render() {
+        
+        // 기존 함수인 onSearchTermChange가 새로운 검색어로 videoSearch를 호출하고 전달
+    	// onSearchTermChange 함수를 몇 초마다 호출할 계획
+        const videoSearch = _.debounce(term => { this.videoSearch(term) }, 300)
+        
+        return(
+        	<div>
+            	{/* 이를 가지고 반환하는 함수는 0.3초마다 호출 */}
+            	<SearchBar onSearchTermChange={videoSearch}/>
+				...
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<App />, document.querySelector('.container'));
+```
 
 
 
 
 
 ### 33. 리엑트 마무리
-
-
-
-
 
 
 
