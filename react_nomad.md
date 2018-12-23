@@ -600,3 +600,139 @@ componentDidMount(){
 
 #### ***promise***
 
+```js
+componentDidMount(){
+    console.log(fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating"));
+    console.log('hello');
+}
+```
+
+두번째 라인 hello는 첫번째 라인 fetch가 끝나지 않으면 실행되지 않는다.
+
+=> ***synchronous(동기)***
+
+
+
+```js
+componentDidMount(){
+    console.log(fetch("movie_api"));
+    console.log(fetch("anime_api"));
+}
+```
+
+만약 영화 서버가 느리면 애니메이션은 계속 기다려야 한다. 비록 애니메이션 서버가 영화 서버보다 빠를지라도 (동기적이기 때문에)
+
+=> ***이러한 경우 promise를 사용***
+
+***promise는 asynchronous(비동기)***
+
+1. 첫 번째 라인이 다 끝나든 말든, 두 번째 라인이 작업을 한다는 의미
+
+   => 계속 다른 작업을 스케쥴해놓을 수 있다. (장점)
+
+2. 시나리오 잡는 방법을 만들어 준다
+
+***fetch, promise가 좋은 이유는 시나리오가 생기고 이를 관리할 수 있다***
+
+
+
+```js
+componentDidMount(){
+    fetch("movie_api")
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
+}
+```
+
+***=> `fetch()` 작업이 완료되면 `.then()` 을 실행해라***
+
+=> `.then()`function은 1개의 ***attribute(object)***만을 준다
+
+fetch의 결과물은 response
+
+```js
+componentDidMount(){
+    fetch("movie_api")
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(err => console.log(err))
+}
+```
+
+
+
+
+
+### session 16. *
+
+#### ***Async / Await***
+
+***callback hell에 빠지지 않기 위해서***
+
+ex) .then .then .then ....
+
+
+
+```js
+class App extends Component {
+
+  state = {}
+
+  // componentDidMount(){
+  //   fetch("https://yts.am/api/v2/list_movies.json?sort_by=like_count")
+  //   // .then(response => console.log(response))
+  //   .then(response => response.json())
+  //   .then(json => console.log(json))
+  //   .catch(err => console.log(err))
+  // }
+
+  componentDidMount(){
+    this._getMovies();
+  }
+
+  _renderMovies = () => {
+    const movies = this.state.movies.map((movie, index) => {
+      console.log(index);
+      return <Movie title={movie.title} poster={movie.large_cover_image} key={index} />
+    })
+    return movies;
+  }
+
+  _getMovies = async () => {
+    const movies = await this._callApi() // _callApi가 끝나기를 기다림
+    this.setState({ // _callApi가 끝나고 나서 실행
+      movies // _callApi의 return value
+    })
+  }
+
+  _callApi = () => {
+    return fetch("https://yts.am/api/v2/list_movies.json?sort_by=like_count") // fetch를 return 해줘야
+    .then(response => response.json())
+    .then(json => json.data.movies)
+    .catch(err => console.log(err))
+  }
+
+  render() {
+    console.log('render');
+    return (
+      <div className="App">
+        {this.state.movies ? this._renderMovies() : 'Loading'}
+      </div>
+    );
+  }
+}
+```
+
+1. fetch를 `_callApi()` 로 변경
+2. `_getMovies()`라는 function을
+3. `_getMovies()` 는 asynchronous function(***async***)
+4. `_callApi()` 작업이 완료되고 return하기를 ***await***
+5. `_callApi` 는 fetch promise를 return할 것인데 이는 모든 데이터는 JSON이라 `json.data.movies`
+6. `json.data.movies` 라는 value는, const movies의 결과값
+7. component의 state를 movies로 set
+
+
+
+component의 key는 인덱스로 사용하는 것이 좋지 않다!
+
+=> 느려진다
