@@ -34,7 +34,11 @@
 
 ### session 3.
 
+#### ***Transfiler or Transfomer***
+
 #### <u>webpack</u>
+
+=> 리액트 코드를 브라우저가 이해할 수 있는 코드로 변경해주는 역할
 
 #### <u>create-react-app</u>
 
@@ -45,6 +49,8 @@
 
 
 ### session 5.
+
+#### ***JSX***
 
 ##### React와 ReactDOM의 차이점
 
@@ -73,6 +79,10 @@
 ***컴포넌트는 무조건 render를 해주고 return 해야함.***
 
 ***render => return => JSX***
+
+
+
+<u>***부모 역할을 하는 컴포넌트 안에 자녀 역할을 하는 컴포넌트를 넣어준다.***</u>
 
 
 
@@ -227,7 +237,7 @@ ex) `PropTypes.string.isRequired`
 
 ### session 9.
 
-#### ***life cycle***
+#### ***life cycle (render / update)***
 
 
 
@@ -262,6 +272,18 @@ class App extends Component {
   }
 }
 ```
+
+* componentWillMount
+
+  => 사이클이 시작되는 것을 알 수 있음
+
+* reder
+
+  => 컴포넌트가 리액트 세계에 존재하게 되었음을 알 수 있음
+
+* componentDidMount
+
+  => 컴포넌트가 성공적으로 리액트 세계에 자리잡았음을 알 수 있음
 
 
 
@@ -311,7 +333,7 @@ class App extends Component {
 
 
 
-### session 11.
+### session 11. *
 
 #### ***setState***
 
@@ -370,7 +392,7 @@ class App extends Component {
 }
 ```
 
-**`...this.state.movies`**
+**`...this.state.movies`** (infinite scroll과 연관성)
 
 *이게 있고 없고의 차이*
 
@@ -478,6 +500,7 @@ class App extends Component {
       <div className="App">
         {this.state.movies ? this._renderMovies() : 'Loading'}
       </div>
+      {/*this.state.movies가 있는 경우 render를 해주고 없는 경우에는 loading을 render해준다.*/}
     );
   }
 }
@@ -492,6 +515,14 @@ class App extends Component {
 ????? (이해 부족 해봐야 알듯?)
 
 ***state가 텅텅 비어있기 때문에***
+
+
+
+*render function에서* 
+
+this.state.movies가 있는 경우에는 this.state.movies를 render 해준다. 
+
+*this.state.movies가 없는 경우에는 loading을 render 해준다.*
 
 
 
@@ -554,6 +585,18 @@ MoviePoster.propTypes = {
 
 
 
+##### class(smart)를 functional(dumb)로 바꿀 때
+
+* ***`{poster}` => parameter 주의***
+
+* `this.props.poster` => `poster`
+
+  => ***class가 아니기 때문에 props가 필요없다***
+
+* functional은 단순히 return을 하기 위해 존재
+
+
+
 **`import React, {Component} from 'react';` 를**
 
 **`import React from 'react';` 로 바꿔준다**
@@ -596,7 +639,7 @@ componentDidMount(){
 
 
 
-### session 15.
+### session 15. *
 
 #### ***promise***
 
@@ -663,7 +706,7 @@ componentDidMount(){
 
 
 
-### session 16. *
+### session 16. **
 
 #### ***Async / Await***
 
@@ -736,3 +779,49 @@ class App extends Component {
 component의 key는 인덱스로 사용하는 것이 좋지 않다!
 
 => 느려진다
+
+
+
+
+
+### session 17. **
+
+***JSX에서는 class를 className이라고 해줘야 한다***
+
+줄 세우기?
+
+
+
+### session 18.
+
+#### ***CSS***
+
+***LineEllipsis => ...***
+
+글을 줄이고 요약해서 render해서 보여준다
+
+```js
+import LinesEllipsis from 'react-lines-ellipsis'
+ 
+<LinesEllipsis
+  text='long long text'
+  maxLine='3'
+  ellipsis='...'
+  trimRight
+  basedOn='letters'
+/>
+```
+
+***구글에서 LineEllipsis라고 검색***
+
+
+
+
+
+### session 19.
+
+#### ***deploy / github***
+
+***yarn build***
+
+localhost에 있을 때 사용하는 코드는 압축되어있지 않고, 느리고, 최적화되어 있지 않는데 ***build*** 를 하는 경우에는 압축되고, 빨라지고, 최적화되어 성능이 더욱 향상된다.
