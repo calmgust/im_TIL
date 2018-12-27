@@ -169,7 +169,7 @@ ReactDOM.render(<App />, document.querySelector('.container'));
 // <App />의 인스턴스를 .container 클래스에서 렌더링
 ```
 
-
+***container라는 클래스를 가진 div를 찾고, 이 div에 app 컴포넌트를 렌더링하라는 말***
 
 
 
