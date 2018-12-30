@@ -240,18 +240,32 @@ const SearchBar = () => {
     
 
 // class
+import React from 'react';
+
 class SearchBar extends React.Component {
     render() {
         return <input />;
     }
 }
+
+//-----
+
+import React, { Component } from 'react';
+// const Component = React.Component;
+
+class SearchBar extends Component {
+    render() {
+        return <input />;
+    }
+}
+
 ```
 
 
 
 
 
-### 16. 유저 이벤트 핸들링(user event handling)
+### 16. 유저 이벤트 핸들링(user event handling) *
 
 리액트에서 이벤트를 핸들링할 때는 두 가지 과정 필요
 
@@ -268,13 +282,14 @@ class SearchBar extends React.Component {
 
 class SearchBar extends React.Component {
     render() {
-        return <input onChange={this.onInputChange} />;
+        return <input onChange={this.onInputChange} />; // *
     }
+    
+    onInputChange(event) { // 패러미터 event는 꼭 event가 아니어도 된다. ex) e
+    console.log(event.target.value); // *
+	} // input 창에 입력한 값이 console에 찍힌다.
 }
 
-onInputChange(event) {
-    console.log(event.target.value);
-} // input 창에 입력한 값이 console에 찍힌다.
 
 //-----
 
@@ -286,6 +301,8 @@ class SearchBar extends React.Component {
     }
 }
 ```
+
+***`event.target.value`***
 
 
 
@@ -339,7 +356,7 @@ class SearchBar extends React.Component {
 
 
 
-### 18. 상태 (state) 더 파고들기
+### 18. 상태 (state) 더 파고들기 *
 
 ```js
 class SearchBar extends React.Component {
@@ -391,11 +408,13 @@ class SearchBar extends React.Component {
 }
 ```
 
+***tip. 글자 수 카운트***
 
 
 
 
-### 19. <u>제어 컴포넌트</u> *
+
+### 19. <u>제어 컴포넌트</u> ***
 
 #### (추가 학습 필요 => 스테이트에서 가장 혼란스러운 부분)
 
@@ -413,8 +432,8 @@ class SearchBar extends React.Component {
     return (
       <div>
         <input 
-          value = {this.state.term} // 값이 입력되지 않는다!!
-    	  onChange={event => this.setState({ term: event.target.value })}
+          value = {this.state.term} // (밑에 onChange를 삭제하면)값이 입력되지 않는다!!
+    	  onChange={event => this.setState({ term: event.target.value })} // 새로운 변화의 값이 있다는 것을 알려준다
         />
       </div>
     );
@@ -427,6 +446,15 @@ class SearchBar extends React.Component {
 
 
 ### 20. 짧은 휴식 그리고 리뷰
+
+* JSX
+* Component
+* State
+* ES6 (class / arrow function / import / export / API)
+
+
+
+* functional / class Component
 
 
 
@@ -512,8 +540,8 @@ class App extends React.Component {
         
         this.state = { videos: [] };
         
-        YTSearch({key: API_KEY, term: 'surfboards'}, data => {
-            this.setState({ videos }); //ES6
+        YTSearch({key: API_KEY, term: 'surfboards'}, videos => {
+            this.setState({ videos }); // ES6 => key와 value가 같을 경우에? key와 변수의 이름이 같은 경우에?
             // this.setState({ videos: videos })
             // 문법에 익숙해지자
         })
@@ -601,6 +629,9 @@ ReactDOM.render(<App />, document.querySelector('.container'));
 ***부모 컴포넌트 `<App / >`에서 자식 컴포넌트 `<VideoList />` 로 데이터를 전달해야 한다.***
 
 #### 함수형(functional) 기반 컴포넌트를 클래스(class) 기반 컴포넌트로 리펙토링할 때 알아야할 중요한 것은 <u>*props를 this.props로 바꿔야*</u> 한다는 점
+
+* ***functional (props)***
+* ***class (this.props)***
 
 
 
@@ -705,7 +736,7 @@ Check the render method of 'VideoList'.
 
 
 
-### 26. <u>비디오 리스트 아이템</u>(video list item)*
+### 26. <u>비디오 리스트 아이템</u>(video list item)**
 
 ***비디오 리스트를 현재 보다 보기 좋게 만드는 것에 초점***
 
@@ -1107,6 +1138,8 @@ pseudo 셀렉터인 hover를 사용하여
 
 ***상단에 SearchBar를 연결***
 
+#### ***토픽 검색에 사용 가능*** *
+
 ```js
 // index.js
 
@@ -1288,8 +1321,6 @@ ReactDOM.render(<App />, document.querySelector('.container'));
 
 
 ### 33. 리엑트 마무리
-
-
 
 
 

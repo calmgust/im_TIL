@@ -548,7 +548,7 @@ this.state.movies가 있는 경우에는 this.state.movies를 render 해준다.
 
 function component는 클래스가 아니기 때문에
 
-props가 필요없음?
+this.props가 필요없음?
 
 ```js
 class MoviePoster extends Component {
@@ -568,7 +568,7 @@ class MoviePoster extends Component {
 //-----
 // 아래의 function으로 바꿔줄 수 있다.
 
-function MoviePoster({poster}) {
+function MoviePoster({poster}) { // {poster} 여기도 주의!!
   return (
     <img src={poster} alt="Movie Poster" />
   )
@@ -591,7 +591,7 @@ MoviePoster.propTypes = {
 
 * `this.props.poster` => `poster`
 
-  => ***class가 아니기 때문에 props가 필요없다***
+  => ***class가 아니기 때문에  this.props가 필요없다***
 
 * functional은 단순히 return을 하기 위해 존재
 
