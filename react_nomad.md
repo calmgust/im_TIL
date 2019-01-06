@@ -729,6 +729,8 @@ class App extends Component {
   //   .catch(err => console.log(err))
   // }
 
+
+  // 1.
   componentDidMount(){
     this._getMovies();
   }
@@ -741,13 +743,15 @@ class App extends Component {
     return movies;
   }
 
-  _getMovies = async () => {
+  // 3.
+  _getMovies = async () => { // 비동기적으로 실행
     const movies = await this._callApi() // _callApi가 끝나기를 기다림
     this.setState({ // _callApi가 끝나고 나서 실행
       movies // _callApi의 return value
     })
   }
 
+  // 2.
   _callApi = () => {
     return fetch("https://yts.am/api/v2/list_movies.json?sort_by=like_count") // fetch를 return 해줘야
     .then(response => response.json())
@@ -776,7 +780,7 @@ class App extends Component {
 
 
 
-component의 key는 인덱스로 사용하는 것이 좋지 않다!
+***component의 key는 인덱스로 사용하는 것이 좋지 않다!***
 
 => 느려진다
 
