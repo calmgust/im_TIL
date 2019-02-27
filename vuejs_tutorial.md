@@ -658,6 +658,101 @@ span{
 
 
 
+### Conditionals (v-if & v-show)
+
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>VueJS Tutorials</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="vue-app">
+    <h1>Conditionals</h1>
+    <button v-on:click="error=!error">Toggle Error</button>
+    <button v-on:click="success=!success">Toggle Success</button>
+    <p v-if="error">There has been an error</p>
+    <p v-else-if="success">Whooo, success :)</p>
+    <!-- v-if="true"일 경우 보여준다 / v-if="false"일 경우 보여주지 않는다 -->
+    <p v-show="error">There has been an error</p>
+    <p v-show="success">Whooo, success :)</p>
+  </div>
+  <script src="App.js"></script>
+</body>
+
+</html>
+
+```
+
+***App.js***
+
+```js
+new Vue({
+  el: '#vue-app',
+  data: {
+    error: false,
+    success: false
+  },
+  methods: {},
+  computed: {}
+});
+
+```
+
+
+
+* ***`v-if`***
+
+  Ex) `v-if="true or false"`
+
+* ***`v-else-if`***
+
+  
+
+* ***`v-show`***
+
+
+
+`v-if / v-show`의 차이 => console 창을 확인!!
+
+
+
+
+
+---
+
+
+
+### Looping with v-for
+
+***index.html***
+
+```html
+
+```
+
+***App.js***
+
+```js
+
+```
+
+
+
+
+
+----
+
+
+
 ## Index
 
 * `v-bind`
