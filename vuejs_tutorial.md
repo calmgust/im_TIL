@@ -320,6 +320,85 @@ new Vue({
 
 
 
+### Keyboard Events (키 수식어)
+
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>VueJS Tutorials</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="vue-app">
+    <h1>Keyboard Events</h1>
+    <label>Name:</label>
+    <input type="text" v-on:keyup.enter="logName" />
+    <!--enter key 입력 시-->
+    <label>Age:</label>
+    <input type="text" v-on:keyup.alt.enter="logAge" />
+    <!--alt + enter key 입력 시-->
+  </div>
+  <script src="App.js"></script>
+</body>
+
+</html>
+```
+
+***App.js***
+
+```js
+new Vue({
+  el: '#vue-app',
+  data: {},
+  methods: {
+    logName: function () { 
+      console.log("you entered your name");
+    },
+    logAge: function () { 
+      console.log("you entered your age"); 
+    }
+  }
+});
+```
+
+
+
+- `.enter`
+
+  ```html
+  `<!-- 위와 같습니다 --><input v-on:keyup.enter="submit"><!-- 약어 사용도 가능합니다 --><input @keyup.enter="submit">`
+  ```
+
+- `.tab`
+
+- `.delete` (“Delete” 와 “Backspace” 키 모두를 캡처합니다)
+
+- `.esc`
+
+- `.space`
+
+- `.up`
+
+- `.down`
+
+- `.left`
+
+- `.right`
+
+
+
+----
+
+
+
 ## Index
 
 * `v-bind`
