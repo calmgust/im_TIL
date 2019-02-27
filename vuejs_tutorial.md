@@ -736,14 +736,81 @@ new Vue({
 ***index.html***
 
 ```html
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>VueJS Tutorials</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="vue-app">
+    <h1>Looping through lists</h1>
+    <!-- <ul>
+      <li v-for="character in characters">{{ character }}</li>
+      character는 다른 이름을 지정해줄 수 있음
+    </ul>
+    <ul>
+      <li v-for="ninja in ninjas">{{ ninja.name }} - {{ ninja.age }}</li>
+    </ul> -->
+    <ul>
+      <li v-for="(character, index) in characters">{{ index + 1 }} . {{ character }}</li>
+    </ul>
+    <ul>
+      <li v-for="(ninja, index) in ninjas">{{ index }} . {{ ninja.name }} - {{ ninja.age }}</li>
+    </ul>
+    <div v-for="(ninja, index) in ninjas">
+      <h3>{{ index }} . {{ ninja.name }}</h3>
+      <p>{{ ninja.age }}</p>
+    </div>
+    <template v-for="(ninja, index) in ninjas">
+      <h3>{{ index }} . {{ ninja.name }}</h3>
+      <p>{{ ninja.age }}</p>
+    </template>
+
+    <template v-for="ninja in ninjas">
+      <div v-for="(val, key) in ninja">
+        <p>{{ key }} - {{ val }}</p>
+      </div>
+    </template>
+    <!-- template은 React.Fragment와 유사!! -->
+
+  </div>
+  <script src="App.js"></script>
+</body>
+
+</html>
 
 ```
 
 ***App.js***
 
 ```js
+new Vue({
+  el: '#vue-app',
+  data: {
+    name: 'jack',
+    characters: ['Mario', 'Luigi', 'Yoshi', 'Bowser'],
+    ninjas:[
+      {name: 'Ryu', age: 25},
+      {name: 'Yoshi', age: 35},
+      {name: 'Ken', age: 55}
+    ]
+  },
+  methods: {},
+  computed: {}
+});
 
 ```
+
+
+
+* ***`v-for`***
+* `<template />` 는 `React.Fragment` 와 유사!!
 
 
 
@@ -756,15 +823,32 @@ new Vue({
 ## Index
 
 * `v-bind`
+
   * `v-bind:href`
   * `v-bind:class`
+
 * `v-html`
+
 * `v-on` === `@`
   * `v-on:click`
   * `v-on:dblclick`
   * `@click`
   * `@dblclick`
   * `@click.once` => ***일회성***
+
 * `v-model`
+
 * methods / computed
+
+* `v-if`
+
+* `v-else-if`
+
+* `v-show`
+
+* `v-for`
+
+* `<template />` => `React.Fragment` 와 유사!!
+
+  
 
