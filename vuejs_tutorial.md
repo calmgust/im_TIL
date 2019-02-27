@@ -399,6 +399,79 @@ new Vue({
 
 
 
+### Two Way Data Binding
+
+index.html
+
+````html
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>VueJS Tutorials</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="vue-app">
+    <h1>Two Way Data Binding</h1>
+    <label>Name:</label>
+    <input type="text" v-model="name" />
+    <span>{{ name }}</span>
+    <label>Age:</label>
+    <input type="text" v-model="age" />
+    <span>{{ age }}</span>
+  </div>
+  <script src="App.js"></script>
+</body>
+
+</html>
+````
+
+App.js
+
+````js
+new Vue({
+  el: '#vue-app',
+  data: {
+    name: '',
+    age: ''
+  },
+  methods: {
+    logName: function () { 
+      console.log("you entered your name");
+    },
+    logAge: function () { 
+      console.log("you entered your age"); 
+    }
+  }
+});
+
+````
+
+
+
+* ***`v-model`***
+
+
+
+
+
+----
+
+
+
+
+
+
+
+----
+
+
+
 ## Index
 
 * `v-bind`
