@@ -112,6 +112,10 @@ new Vue({
 
 
 
+* ***`v-bind`***
+
+
+
 
 
 ----
@@ -552,6 +556,104 @@ new Vue({
 
 
 
+---
+
+
+
+### Dynamic CSS
+
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>VueJS Tutorials</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="vue-app">
+    <h1>Dynamic CSS</h1>
+    <h2>Example 1</h2>
+    <!-- <div v-bind:class="{red:true, blue:true}"></div> -->
+    <!-- <div v-on:click="available=!available" v-bind:class="{available: available}">
+      <span>Ryu</span>
+    </div> -->
+    <h2>Example 2</h2>
+    <button v-on:click="nearby=!nearby">Toggle nearby</button>
+    <button v-on:click="available=!available">Toggle available</button>
+    <div v-bind:class="compClasses">
+      <span>Ryu</span>
+    </div>
+  <script src="App.js"></script>
+</body>
+
+</html>
+
+```
+
+***App.js***
+
+```js
+new Vue({
+  el: '#vue-app',
+  data: {
+    available: true,
+    nearby: false
+  },
+  methods: {
+
+  },
+  computed: {
+    compClasses: function () {
+      // Example 2
+      return {
+        available: this.available,
+        nearby: this.nearby
+      }
+    }
+  }
+});
+
+```
+
+***style.css***
+
+```css
+span{
+  background: red;
+  display: inline-block;
+  padding: 10px;
+  color: #fff;
+  margin: 10px 0;
+}
+
+.available span{
+  background: green;
+}
+
+.nearby span:after{
+  content: "nearby";
+  margin-left: 10px;
+}
+```
+
+
+
+* `v-on:click="nearby=!nearby"`
+* `v-on:click="available=!available"`
+
+* ***`v-bind:class`***
+
+
+
+
+
 ----
 
 
@@ -560,6 +662,7 @@ new Vue({
 
 * `v-bind`
   * `v-bind:href`
+  * `v-bind:class`
 * `v-html`
 * `v-on` === `@`
   * `v-on:click`
@@ -568,4 +671,5 @@ new Vue({
   * `@dblclick`
   * `@click.once` => ***일회성***
 * `v-model`
+* methods / computed
 
