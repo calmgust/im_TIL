@@ -401,7 +401,7 @@ new Vue({
 
 ### Two Way Data Binding
 
-index.html
+***index.html***
 
 ````html
 <!DOCTYPE html>
@@ -431,7 +431,7 @@ index.html
 </html>
 ````
 
-App.js
+***App.js***
 
 ````js
 new Vue({
@@ -464,7 +464,91 @@ new Vue({
 
 
 
+### Computed Properties
 
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>VueJS Tutorials</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <div id="vue-app">
+    <h1>Computed Properties</h1>
+    <button v-on:click="a++">Add to A</button>
+    <button v-on:click="b++">Add to B</button>
+    <p>A - {{ a }}</p>
+    <p>B - {{ b }}</p>
+    <!-- <p>Age + A = {{ addToA() }}</p>
+    <p>Age + B = {{ addToB() }}</p> -->
+    <p>Age + A = {{ addToA }}</p>
+    <p>Age + B = {{ addToB }}</p>
+  </div>
+  <script src="App.js"></script>
+</body>
+
+</html>
+
+```
+
+***App.js***
+
+```js
+new Vue({
+  el: '#vue-app',
+  data: {
+    age: 20,
+    a: 0,
+    b: 0
+  },
+  methods: {
+    // addToA: function () {
+    //   console.log('addToA');
+    //   return this.a + this.age;
+    // },
+    // addToB: function () {
+    //   console.log('addToB');
+    //   return this.b + this.age;
+    // }
+  },
+  computed: {
+    addToA: function () {
+      console.log('addToA');
+      return this.a + this.age;
+    },
+    addToB: function () {
+      console.log('addToB');
+      return this.b + this.age;
+    }
+  }
+});
+```
+
+
+
+* ***methods vs computed***
+
+* methods
+
+   자신이 참고하고 있는 것 / 자신이 참고하지 않는 값이 변경될 때도 재실행
+
+  Ex) `addToA()`
+
+* computed 
+
+  자신이 참고하고 있는 값이 변경될 때만 재실행
+
+  Ex) `addToA`
+
+  
 
 
 
@@ -483,4 +567,5 @@ new Vue({
   * `@click`
   * `@dblclick`
   * `@click.once` => ***일회성***
+* `v-model`
 
