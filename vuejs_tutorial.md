@@ -1075,6 +1075,79 @@ new Vue({
 
 
 
+---
+
+
+
+### Referencing with $refs
+
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>VueJS Tutorials</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+
+  <body>
+    <div id="vue-app">
+      <h2>Refs</h2>
+      <input type="text" ref="input" />
+      <button v-on:click="readRefsValue">Submit</button>
+      <p>Your fav food: {{ output }}</p>
+      <div ref="test">hello</div>
+      <button v-on:click="readRefsHtml">Change</button>
+    </div>
+
+    <script src="App.js"></script>
+  </body>
+</html>
+
+```
+
+***App.js***
+
+```js
+new Vue({
+  el: '#vue-app',
+  data: {
+    output: 'Your fav food',
+    test: ''
+  },
+  methods: {
+    readRefsValue: function () { 
+      console.log(this.$refs.input.value); 
+      this.output = this.$refs.input.value;
+    },
+    readRefsHtml: function () { 
+      console.log(this.$refs.test.innerText);
+      this.test = this.$refs.test.innerText;
+    }
+  }
+})
+```
+
+
+
+* ***`this.$refs`***
+
+
+
+
+
+---
+
+
+
+### The Vue CLI
+
+
+
 ----
 
 
