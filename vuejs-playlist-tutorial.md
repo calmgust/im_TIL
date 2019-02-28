@@ -817,3 +817,123 @@ h1 {
 
 
 ### Event Bus
+
+***./components/Header.vue***
+
+```vue
+<template>
+  <header>
+    <h1 v-on:click="changeTitle">{{ title }}</h1>
+  </header>
+</template>
+
+<script>
+import { bus } from '../main';
+
+export default {
+  props: {
+    title: {
+      type: String,
+    }
+  },
+  data() {
+    return {
+      // title: "Vue Characters"
+      // => props로 받기 때문에 쓸모없음
+    };
+  },
+  methods: {
+    changeTitle: function () {
+      // this.title = "Vue Wizards"
+
+      // this.$emit('changeTitle', 'Vue Wizards');
+      // this.$emit(...)을 쓰는 경우 => child to parent
+      // 이벤트를 상위로 올려준다? 
+
+      this.title = 'Vue Wizards'; // 이 코드를 입력 안해줄 경우 Footer만 변한다!!
+      bus.$emit('titleChanged', 'Vue Wizards');
+    }
+  }
+};
+</script>
+
+<style scoped>
+header {
+  background: lightgreen;
+  padding: 10px;
+}
+h1 {
+  color: #222;
+  text-align: center;
+}
+</style>
+```
+
+***./components/Footer.vue***
+
+```vue
+<template>
+  <footer>
+    <p>{{ copyright }} {{ title }}</p>
+  </footer>
+</template>
+
+<script>
+import { bus } from '../main';
+
+export default {
+  props: {
+    title: {
+      type: String
+    }
+  },
+  data() {
+    return {
+      copyright: "Copyright 2019"
+    };
+  },
+  created() {
+    bus.$on('titleChanged', (data) => {
+      this.title = data;
+      // data => Header에서 emit해주는 'Vue Wizards'
+      // Header를 클릭할 경우 Footer도 변한다.
+    })
+  }
+};
+</script>
+
+<style scoped>
+footer {
+  background: #222;
+  padding: 6px;
+}
+p {
+  color: lightgreen;
+  text-align: center;
+}
+</style>
+```
+
+***main.js***
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+
+export const bus = new Vue();
+
+new Vue({
+  el: '#app',
+  render: h => h(App)
+})
+```
+
+
+
+
+
+---
+
+
+
+### Lifecycle Hooks
