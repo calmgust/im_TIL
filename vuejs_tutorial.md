@@ -820,6 +820,118 @@ new Vue({
 
 
 
+### Simple Punchbag Game ***
+
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>VueJS Tutorials</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+
+  <body>
+    <div id="vue-app">
+        
+      <h1>Simple Punchbag Game</h1>
+      <!-- bag image -->
+      <div id="bag" v-bind:class="{ burst: ended }"></div>
+
+      <!-- bag health -->
+      <div id="bag-health">
+        <div v-bind:style="{ width: health + '%' }"></div>
+      </div>
+
+      <!-- game controls -->
+      <div id="controls">
+        <button v-on:click="punch" v-show="!ended">Punch</button>
+        <button v-on:click="restart">Restart</button>
+      </div>
+        
+    </div>
+    <script src="App.js"></script>
+  </body>
+</html>
+```
+
+***App.js***
+
+```js
+new Vue({
+  el: '#vue-app',
+  data: {
+    health: 100,
+    ended: false
+  },
+  methods: {
+    punch: function () { 
+      console.log(this.health);
+      this.health -= 10;
+      if (this.health <= 0) { 
+        this.ended = true;
+      }
+    },
+    restart: function () { 
+      console.log(this.health);
+      this.health = 100;
+      this.ended = false;
+    }
+  },
+  computed: {}
+});
+
+```
+
+***style.css***
+
+```css
+#bag {
+  width: 200px;
+  height: 500px;
+  margin: 0 auto;
+  background: url(./img/bag.png) center no-repeat;
+  background-size: 80%;
+}
+
+#bag.burst {
+  background: url(./img/bag-burst.png) center no-repeat;
+  background-size: 80%;
+}
+
+#bag-health {
+  width: 200px;
+  border: 2px solid #000;
+  margin: 0 auto 20px auto;
+}
+
+#bag-health div {
+  height: 20px;
+  background: crimson;
+}
+
+#controls {
+  width: 120px;
+  margin: 0 auto;
+}
+```
+
+
+
+
+
+----
+
+
+
+----
+
+
+
 ## Index
 
 * `v-bind`
