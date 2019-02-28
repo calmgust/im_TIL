@@ -1005,6 +1005,76 @@ two.title = 'Chaged from outside';
 
 
 
+---
+
+
+
+### Components
+
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>VueJS Tutorials</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+
+  <body>
+    <h1>Components</h1>
+
+    <div id="vue-app-one">
+      <h2>Vue app one</h2>
+      <greeting></greeting>
+    </div>
+
+    <div id="vue-app-two">
+      <h2>Vue app two</h2>
+      <greeting></greeting>
+    </div>
+      
+    <script src="App.js"></script>
+  </body>
+</html>
+
+```
+
+***App.js***
+
+```js
+Vue.component('greeting', {
+  // template: '<p>Hey there, I am a re-usable component</p>',
+  template: '<p>Hey there, I am a {{ name }}. <button v-on:click="changeName">Change name</button></p>',
+  data: function () { 
+    return {
+      name: 'Yoshi'
+    }
+  },
+  methods: {
+    changeName: function () { 
+      this.name = 'Mario';
+    }
+  }
+})
+
+new Vue({
+  el: '#vue-app-one'
+})
+
+new Vue({
+  el: '#vue-app-two'
+})
+
+```
+
+
+
+
+
 ----
 
 
