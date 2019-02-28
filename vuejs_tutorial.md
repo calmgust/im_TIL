@@ -928,6 +928,83 @@ new Vue({
 
 
 
+### Mutiple Vue Instance
+
+***index.html***
+
+```html
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>VueJS Tutorials</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+
+  <body>
+      
+    <h1>Multiple Vue Instance</h1>
+
+    <div id="vue-app-one">
+      <h2>{{ title }}</h2>
+      <p>{{ greet }}</p>
+    </div>
+
+    <div id="vue-app-two">
+      <h2>{{ title }}</h2>
+      <p>{{ greet }}</p>
+      <button v-on:click="changeTitle">Change App One Title</button>
+    </div>
+      
+    <script src="App.js"></script>
+  </body>
+</html>
+
+```
+
+***App.js***
+
+```js
+const one = new Vue({
+  el: '#vue-app-one',
+  data: {
+    title: 'Vue App One'
+  },
+  methods: {},
+  computed: {
+    greet: function () { 
+      return 'Hello from app one :)';
+    }
+  }
+})
+
+const two = new Vue({
+  el: '#vue-app-two',
+  data: {
+    title: 'Vue App Two'
+  },
+  methods: {
+    changeTitle: function () { 
+      one.title = 'Title changed';
+    }
+  },
+  computed: {
+    greet: function () { 
+      return 'Yo dudes, this is app 2 speaking to ya :)';
+    }
+  }
+})
+
+two.title = 'Chaged from outside';
+
+```
+
+
+
+
+
 ----
 
 
