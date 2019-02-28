@@ -242,3 +242,167 @@ h1 {
 
 ### Nesting Components Examples
 
+***App.vue***
+
+```vue
+<template>
+  <div>
+    <app-header></app-header>
+    <app-article></app-article>
+    <app-footer></app-footer>
+  </div>
+</template>
+
+<script>
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Article from "./components/Article";
+
+export default {
+  components: {
+    "app-header": Header,
+    "app-footer": Footer,
+    "app-article": Article
+  },
+  data() {
+    return {};
+  }
+};
+</script>
+
+<style>
+</style>
+```
+
+***./components/Header.vue***
+
+```vue
+<template>
+  <header>
+    <h1>{{ title }}</h1>
+  </header>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: "Vue Characters"
+    };
+  }
+};
+</script>
+
+<style scoped>
+header {
+  background: lightgreen;
+  padding: 10px;
+}
+h1 {
+  color: #222;
+  text-align: center;
+}
+</style>
+
+```
+
+***./components/Footer.vue***
+
+```vue
+<template>
+  <footer>
+    <p>{{ copyright }}</p>
+  </footer>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      copyright: "Copyright 2019 Vuejs"
+    };
+  }
+};
+</script>
+
+<style scoped>
+footer {
+  background: #222;
+  padding: 6px;
+}
+p {
+  color: lightgreen;
+  text-align: center;
+}
+</style>
+```
+
+***./components/Article.vue***
+
+````vue
+<template>
+  <div id="characters">
+    <ul>
+      <li
+        v-for="character in characters"
+        :key="character"
+        v-on:click="character.show = !character.show"
+      >
+        <h2>{{ character.name }}</h2>
+        <h3 v-show="character.show">{{ character.speciality }}</h3>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      characters: [
+        { name: "Ryu", speciality: "Vue Components", show: false },
+        { name: "Crystal", speciality: "HTML Wizardry", show: false },
+        { name: "Hitoshi", speciality: "Click Events", show: false },
+        { name: "Tango", speciality: "Conditionals", show: false },
+        { name: "Kami", speciality: "Webpack", show: false },
+        { name: "Yoshi", speciality: "Data Diggin", show: false }
+      ]
+    };
+  }
+};
+</script>
+
+<style scoped>
+#ninjas {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  flex-grow: 1;
+  flex-basis: 300px;
+  text-align: center;
+  padding: 30px;
+  border: 1px solid #222;
+  margin: 10px;
+}
+</style>
+
+````
+
+
+
+
+
+----
+
+
+
