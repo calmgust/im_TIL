@@ -156,7 +156,7 @@ new Vue({
 
 
 
-### Component CSS
+### Component CSS (scoped)
 
 ***App.vue***
 
@@ -237,4 +237,8 @@ h1 {
 
 
 ----
+
+
+
+### Nesting Components Examples
 
