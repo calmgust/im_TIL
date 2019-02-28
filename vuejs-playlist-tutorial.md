@@ -1193,3 +1193,157 @@ form > div{
 
 
 ### Dynamic Components
+
+***App.vue***
+
+```vue
+<template>
+  <div>
+    <!-- <form-one></form-one>
+    <form-two></form-two> -->
+    <keep-alive>
+      <component v-bind:is="component"></component>
+      <!-- <keep-alive> 진행 중 상황 유지 -->
+    </keep-alive>
+    <button v-on:click="component = 'form-one'">Show form one</button>
+    <button v-on:click="component = 'form-two'">Show form two</button>
+  </div>
+</template>
+
+<script>
+import formOne from './components/formOne';
+import formTwo from './components/formTwo';
+
+export default {
+  components: {
+    'form-one': formOne,
+    'form-two': formTwo
+  },
+  data() {
+    return {
+      component: 'form-one'
+    };
+  },
+  methods: {
+
+  }
+};
+</script>
+
+<style>
+</style>
+```
+
+***formOne.vue***
+
+```vue
+<template>
+  <div>
+    <form-helper>
+      <div slot="form-header">
+        <h3>Form One - Contact Us</h3>
+        <p>Fill in this form to contact us</p>
+      </div>
+      <div slot="form-fields">
+        <input type="text" placeholder="name" required />
+        <label>Your Message:</label>
+        <textarea></textarea>
+      </div>
+      <div slot="form-controls">
+        <button v-on:click="handleSubmit">Send</button>
+      </div>
+    </form-helper>
+  </div>
+</template>
+
+<script>
+// Imports
+import formHelper from './formHelper.vue'
+export default {
+  components: {
+    'form-helper': formHelper
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    handleSubmit: function(){
+      alert('thanks for submitting form one & contacting us');
+    }
+  }
+}
+</script>
+
+<style>
+body{
+  margin: 0;
+  font-family: 'Nunito SemiBold';
+}
+</style>
+```
+
+***formTwo.vue***
+
+```vue
+<template>
+  <div>
+    <form-helper>
+      <div slot="form-header">
+        <h3>Form Two - Log In</h3>
+        <p>Enter your details to log-in</p>
+      </div>
+      <div slot="form-fields">
+        <input type="text" placeholder="username" required />
+        <input type="password" placeholder="password" required />
+      </div>
+      <div slot="form-controls">
+        <button v-on:click="handleSubmit">Login</button>
+      </div>
+    </form-helper>
+  </div>
+</template>
+
+<script>
+// Imports
+import formHelper from './formHelper.vue'
+export default {
+  components: {
+    'form-helper': formHelper
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    handleSubmit: function(){
+      alert('thanks for logging in (form two)');
+    }
+  }
+}
+</script>
+
+<style>
+body{
+  margin: 0;
+  font-family: 'Nunito SemiBold';
+}
+</style>
+```
+
+
+
+* **`<keep-alive>`** => 진행 중 상황 유지
+
+
+
+
+
+---
+
+
+
+### Input Binding (forms)
+
+
+
