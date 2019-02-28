@@ -1044,5 +1044,152 @@ li {
 
 
 
-### Slots
+### Slots *
 
+### (file change)
+
+***App.vue***
+
+```vue
+<template>
+  <div>
+    <form-helper>
+      <!-- <h2 slot="title">I am the slot title</h2>
+      <h2 slot="title">{{ title }}</h2>
+      <p slot="text">I am the paragraph text for the slot</p> -->
+
+      <div slot="form-header">
+        <h3>This is the title of the form</h3>
+        <p>Information about the form</p>
+      </div>
+      <div slot="form-fields">
+        <input type="text" placeholder="name" required />
+        <input type="password" placeholder="password" required />
+      </div>
+      <div slot="form-controls">
+        <button v-on:click="handleSubmit">Submit</button>
+      </div>
+      
+    </form-helper>
+  </div>
+</template>
+
+<script>
+import formHelper from './components/formHelper'
+
+export default {
+  components: {
+    'form-helper': formHelper
+  },
+  data() {
+    return {
+      title: 'I am a dynamic slot title'
+    };
+  },
+  methods: {
+
+  }
+};
+</script>
+
+<style>
+</style>
+```
+
+***./components/formHelper.vue***
+
+```vue
+<template>
+  <!-- <div>
+    <slot name="title"></slot>
+    <h1>I am the form helper</h1>
+    <slot name="text"></slot>
+  </div> -->
+
+  <div>
+
+    <h1>Please fill out our form...</h1>
+
+    <form>
+      <div id="form-header">
+        <slot name="form-header"></slot>
+      </div>
+      <div id="form-fields">
+        <slot name="form-fields"></slot>
+      </div>
+      <div id="form-controls">
+        <slot name="form-controls"></slot>
+      </div>
+      <div id="useful-links">
+        <ul>
+          <li><a href="#">Link 1</a></li>
+          <li><a href="#">Link 2</a></li>
+          <li><a href="#">Link 3</a></li>
+          <li><a href="#">Link 4</a></li>
+        </ul>
+      </div>
+    </form>
+
+  </div>
+</template>
+
+<script>
+export default {
+  components: {
+
+  },
+  data() {
+    return {
+
+    };
+  },
+  methods: {
+
+  }
+};
+</script>
+
+<style scoped>
+/* h1{
+  color: red;
+} */
+h1{
+    text-align: center;
+}
+form{
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+}
+#useful-links ul{
+    padding: 0;
+}
+#useful-links li{
+    display: inline-block;
+    margin-right: 10px;
+}
+form > div{
+    padding: 20px;
+    background: #eee;
+    margin: 20px 0;
+}
+#form-header{
+    background: #ddd;
+    border: 1px solid #bbb;
+}
+</style>
+```
+
+
+
+* **`slot`**
+
+
+
+
+
+---
+
+
+
+### Dynamic Components
