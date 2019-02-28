@@ -1079,7 +1079,7 @@ new Vue({
 
 
 
-### Referencing with $refs
+### Referencing with $refs **
 
 ***index.html***
 
@@ -1137,14 +1137,6 @@ new Vue({
 * ***`this.$refs`***
 
 
-
-
-
----
-
-
-
-### The Vue CLI
 
 
 
